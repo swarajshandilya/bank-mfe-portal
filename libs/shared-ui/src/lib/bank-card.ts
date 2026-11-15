@@ -3,13 +3,30 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'lib-bank-card',
   template: `
-    <div class="card shadow-sm h-100">
+    <div class="card h-100 border-0 shadow-sm bank-card">
       <div class="card-body">
-        <h6 class="text-muted">{{ title() }}</h6>
-        <div class="display-6">{{ value() }}</div>
+        <div class="label">{{ title() }}</div>
+        <div class="value">{{ value() }}</div>
         <small class="text-muted">{{ note() }}</small>
       </div>
     </div>
+  `,
+  styles: `
+    .bank-card {
+      border-top: 3px solid var(--bank-accent) !important;
+      border-radius: 0.5rem;
+    }
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--bank-navy);
+    }
   `,
 })
 export class BankCard {
