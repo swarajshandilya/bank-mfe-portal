@@ -1,2 +1,9 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-dark bg-dark px-3 mb-4">
+  <span class="navbar-brand">Bank Portal</span>
+  <div class="d-flex gap-3">
+    <a class="text-white" routerLink="/dashboard" routerLinkActive="fw-bold text-decoration-underline">Dashboard</a>
+    <a class="text-white" routerLink="/wealth" routerLinkActive="fw-bold text-decoration-underline">Wealth</a>
+    <a class="text-white" routerLink="/credit-risk" routerLinkActive="fw-bold text-decoration-underline">Credit Risk</a>
+  </div>
+</nav>
+<div class="container"><router-outlet /></div>
