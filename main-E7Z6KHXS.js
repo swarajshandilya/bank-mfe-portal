@@ -1,0 +1,1 @@
+import{a as r}from"./chunk-EBFZQA4A.js";r("federation.manifest.json",{hostRemoteEntry:{url:"./remoteEntry.json"}}).catch(o=>console.error(o)).then(o=>import("./chunk-6FFZHHRP.js")).catch(o=>console.error(o));
