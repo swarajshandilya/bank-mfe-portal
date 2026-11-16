@@ -1,7 +1,7 @@
 # 0007: Make remotes independently releasable
 
 Status: Accepted · Date: 2026-11-16
-Amends [0005](0005-shared-ui-and-bootstrap.md) · Supersedes the deployment part of [0006](0006-static-hosting-csr.md)
+Amends [005](005-shared-ui-and-bootstrap.md) · Supersedes the deployment part of [006](006-static-hosting-csr.md)
 
 ## Context
 Review feedback pointed out that this repo claimed independent remotes but did not deliver them:
