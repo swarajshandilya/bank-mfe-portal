@@ -46,7 +46,7 @@ sequenceDiagram
 | `credit-risk` | `scope:credit-risk` | Credit risk screens | `scope:shared` |
 | `shared-ui` | `scope:shared`, `type:ui` | Presentational components only | Angular only |
 
-Remotes must not import from each other. This is enforced by `@nx/enforce-module-boundaries`, so a violation fails lint and CI. See [ADR 0007](adr/0007-independent-releasability.md).
+Remotes must not import from each other. This is enforced by `@nx/enforce-module-boundaries`, so a violation fails lint and CI. See [ADR 007](adr/0007-independent-releasability.md).
 
 ## Runtime contract
 
