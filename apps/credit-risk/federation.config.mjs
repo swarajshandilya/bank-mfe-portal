@@ -20,6 +20,7 @@ export default withNativeFederation({
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
+    '@bank/shared-ui'
   ],
 
   // Please read our docs about configuring native federation:
