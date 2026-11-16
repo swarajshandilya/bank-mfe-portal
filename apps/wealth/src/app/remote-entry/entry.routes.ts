@@ -6,7 +6,7 @@ import { BankCard } from '@bank/shared-ui';
   selector: 'app-portfolio',
   imports: [BankCard],
   template: `
-    <h2 class="mb-3">Wealth Management</h2>
+    <h2 class="mb-3">Wealth Management Overview</h2>
     <div class="row g-3">
       <div class="col-md-4">
         <lib-bank-card

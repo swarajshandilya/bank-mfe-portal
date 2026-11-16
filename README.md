@@ -2,7 +2,7 @@
 
 A banking micro-frontend portal built with **Nx**, **Angular 22** and **Native Federation**: one shell and two independently built remotes, sharing a UI library.
 
-**[Live demo](https://swarajshandilya.github.io/bank-mfe-portal/)** · [Architecture](docs/architecture.md) · [Decision records](docs/adr/README.md)·
+**[Live demo](https://swarajshandilya.github.io/bank-mfe-portal/dashboard)** · [Architecture](docs/architecture.md) · [Decision records](docs/adr/README.md)·
 
 ![Dashboard](docs/images/portal.png)
 

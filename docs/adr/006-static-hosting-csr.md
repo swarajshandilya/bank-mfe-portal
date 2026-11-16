@@ -19,3 +19,6 @@ The demo needs a free, public URL that works from a GitHub repo.
 ## Alternatives considered
 - **SSR with federation:** more moving parts and needs a server.
 - **Separate hosting per remote** (for example three Pages sites or a CDN): closer to independent deployment but more setup than this demo needs.
+
+## Status
+Status: Accepted (deployment model superseded in part by 0007).

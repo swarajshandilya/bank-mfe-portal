@@ -19,3 +19,6 @@ All three apps need a consistent look and a few reusable components. We also wan
 ## Alternatives considered
 - **Keep `ng-bootstrap` and load `@angular/localize` in every app:** viable, but adds startup coupling between shell and remotes.
 - **Angular Material or another design system:** heavier, and not needed for the demo.
+
+## Status
+Amended by 0007
