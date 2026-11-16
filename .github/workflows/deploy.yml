@@ -67,6 +67,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist/apps/wealth/browser
           destination_dir: remotes/wealth
+          keep_files: true
 
   credit-risk:
     needs: [changes, wealth]
@@ -90,6 +91,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist/apps/credit-risk/browser
           destination_dir: remotes/credit-risk
+          keep_files: true
 
   shell:
     needs: [changes, wealth, credit-risk]
