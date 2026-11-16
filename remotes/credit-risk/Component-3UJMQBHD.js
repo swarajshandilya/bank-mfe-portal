@@ -1,0 +1,2 @@
+import{RouterModule as i,RouterOutlet as r}from"@angular/router";import*as e from"@angular/core";var o=class n{title="credit-risk";static \u0275fac=function(t){return new(t||n)};static \u0275cmp=e.\u0275\u0275defineComponent({type:n,selectors:[["app-root"]],decls:3,vars:0,consts:[[1,"container","py-4"]],template:function(t,a){t&1&&(e.\u0275\u0275elementStart(0,"div",0),e.\u0275\u0275element(1,"router-outlet"),e.\u0275\u0275elementEnd(),e.\u0275\u0275text(2,`.
+`))},dependencies:[r,i],encapsulation:2})};export{o as App};
