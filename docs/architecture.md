@@ -2,7 +2,7 @@
 
 ## Context
 
-A shell application composes independently built micro frontends (remotes) for separate banking domains. Remotes are loaded at runtime from URLs listed in a manifest, so a remote can be rebuilt and redeployed without rebuilding the shell, as long as it respects the contract below. See [ADR 0007](adr/0007-independent-releasability.md).
+A shell application composes independently built micro frontends (remotes) for separate banking domains. Remotes are loaded at runtime from URLs listed in a manifest, so a remote can be rebuilt and redeployed without rebuilding the shell, as long as it respects the contract below. See [ADR 007](adr/0007-independent-releasability.md).
 
 ## System view
 
