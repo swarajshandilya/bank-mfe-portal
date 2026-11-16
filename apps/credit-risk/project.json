@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/credit-risk/src",
-  "tags": [],
+  "tags": ["scope:credit-risk", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-architects/native-federation:build",

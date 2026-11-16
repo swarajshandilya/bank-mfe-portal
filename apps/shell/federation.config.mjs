@@ -9,8 +9,6 @@ export default withNativeFederation({
   shared: fromPackageJson({ singleton: true, strictVersion: true, requiredVersion: 'auto', build: 'package' })
     .patch(['@angular/*'], {includeSecondaries: { keepAll: true } } ),
 
-  sharedMappings: ['@bank/shared-ui'],
-
   skip: [
     'rxjs/ajax',
     'rxjs/fetch',

@@ -13,19 +13,19 @@ import { Component, input } from '@angular/core';
   `,
   styles: `
     .bank-card {
-      border-top: 3px solid var(--bank-accent) !important;
-      border-radius: 0.5rem;
+        border-top: 3px solid var(--bank-accent, #13a89e) !important;
+        border-radius: 0.5rem;
+    }
+    .value {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--bank-navy, #0b2545);
     }
     .label {
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-size: 0.75rem;
       color: #6b7280;
-    }
-    .value {
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--bank-navy);
     }
   `,
 })

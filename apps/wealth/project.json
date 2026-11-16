@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/wealth/src",
-  "tags": [],
+  "tags": ["scope:wealth", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-architects/native-federation:build",

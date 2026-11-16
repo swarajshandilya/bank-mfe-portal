@@ -1,61 +1,120 @@
-name: Deploy to GitHub Pages
+name: Deploy (per app)
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      all:
+        description: Deploy everything
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: publish
+  cancel-in-progress: false
+
+env:
+  BASE: https://swarajshandilya.github.io/bank-mfe-portal
 
 jobs:
-  build:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      shell: ${{ steps.f.outputs.shell == 'true' || steps.f.outputs.shared == 'true' || inputs.all }}
+      wealth: ${{ steps.f.outputs.wealth == 'true' || steps.f.outputs.shared == 'true' || inputs.all }}
+      credit: ${{ steps.f.outputs.credit == 'true' || steps.f.outputs.shared == 'true' || inputs.all }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: f
+        with:
+          filters: |
+            shared:
+              - 'libs/shared-ui/**'
+              - 'package-lock.json'
+              - 'nx.json'
+              - 'tsconfig.base.json'
+            shell:
+              - 'apps/shell/**'
+            wealth:
+              - 'apps/wealth/**'
+            credit:
+              - 'apps/credit-risk/**'
+
+  wealth:
+    needs: changes
+    if: needs.changes.outputs.wealth == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 26
           cache: npm
-
       - run: npm ci
-
-      - run: npx nx build shell --base-href=/bank-mfe-portal/
       - run: npx nx build wealth
-      - run: npx nx build credit-risk
-
-      - name: Assemble site
+      - name: Contract check
         run: |
-          mkdir -p site/remotes/wealth site/remotes/credit-risk
-          cp -r dist/apps/shell/browser/. site/
-          cp -r dist/apps/wealth/browser/. site/remotes/wealth/
-          cp -r dist/apps/credit-risk/browser/. site/remotes/credit-risk/
-          cat > site/federation.manifest.json <<'EOF'
+          f=dist/apps/wealth/browser/remoteEntry.json
+          if ! grep -q '"./routes"' "$f"; then echo "Missing exposed ./routes"; exit 1; fi
+          if grep -q '@bank/shared-ui' "$f"; then echo "shared-ui must not be shared at runtime"; exit 1; fi
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/apps/wealth/browser
+          destination_dir: remotes/wealth
+
+  credit-risk:
+    needs: [changes, wealth]
+    if: ${{ !cancelled() && needs.wealth.result != 'failure' && needs.changes.outputs.credit == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npx nx build credit-risk
+      - name: Contract check
+        run: |
+          f=dist/apps/credit-risk/browser/remoteEntry.json
+          if ! grep -q '"./routes"' "$f"; then echo "Missing exposed ./routes"; exit 1; fi
+          if grep -q '@bank/shared-ui' "$f"; then echo "shared-ui must not be shared at runtime"; exit 1; fi
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/apps/credit-risk/browser
+          destination_dir: remotes/credit-risk
+
+  shell:
+    needs: [changes, wealth, credit-risk]
+    if: ${{ !cancelled() && needs.wealth.result != 'failure' && needs['credit-risk'].result != 'failure' && needs.changes.outputs.shell == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npx nx build shell --base-href=/bank-mfe-portal/
+      - name: Prepare site
+        run: |
+          cp -r dist/apps/shell/browser site
+          cat > site/federation.manifest.json <<EOF
           {
-            "wealth": "https://swarajshandilya.github.io/bank-mfe-portal/remotes/wealth/remoteEntry.json",
-            "credit-risk": "https://swarajshandilya.github.io/bank-mfe-portal/remotes/credit-risk/remoteEntry.json"
+            "wealth": "$BASE/remotes/wealth/remoteEntry.json",
+            "credit-risk": "$BASE/remotes/credit-risk/remoteEntry.json"
           }
           EOF
           cp site/index.html site/404.html
-          touch site/.nojekyll
-
-      - uses: actions/upload-pages-artifact@v3
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          path: site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: site
+          keep_files: true

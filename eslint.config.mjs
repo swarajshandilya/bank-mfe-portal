@@ -16,11 +16,12 @@ export default [
           enforceBuildableLibDependency: true,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
-            {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
-            },
-          ],
+            { sourceTag: 'scope:shell', onlyDependOnLibsWithTags: ['scope:shell', 'scope:shared'] },
+            { sourceTag: 'scope:wealth', onlyDependOnLibsWithTags: ['scope:wealth', 'scope:shared'] },
+            { sourceTag: 'scope:credit-risk', onlyDependOnLibsWithTags: ['scope:credit-risk', 'scope:shared'] },
+            { sourceTag: 'scope:shared', onlyDependOnLibsWithTags: ['scope:shared'] },
+            { sourceTag: 'type:ui', onlyDependOnLibsWithTags: ['type:ui', 'type:util'] },
+    ],
         },
       ],
     },
